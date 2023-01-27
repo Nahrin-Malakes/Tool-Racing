@@ -11,7 +11,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -43,7 +42,7 @@ export const AddVehicle = () => {
       refetchOnWindowFocus: true,
     }
   );
-  const { mutateAsync, isLoading, isSuccess } = api.vehicle.add.useMutation({
+  const { mutateAsync, isLoading } = api.vehicle.add.useMutation({
     onError(error) {
       toast({
         title: "Error",
@@ -76,21 +75,24 @@ export const AddVehicle = () => {
   }, [ownersData]);
 
   const handleSubmit = async () => {
-    await mutateAsync({
-      model,
-      year,
-      ownerMobile,
-    });
-
-    if (isSuccess) {
-      toast({
-        title: "Vehicle created",
-        description: "We've created the vehicle for you.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
+    await mutateAsync(
+      {
+        model,
+        year,
+        ownerMobile,
+      },
+      {
+        onSuccess() {
+          toast({
+            title: "Vehicle created",
+            description: "We've created the vehicle for you.",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -135,8 +137,9 @@ export const AddVehicle = () => {
               colorScheme="blue"
               mr={3}
               onClick={() => void handleSubmit()}
+              isLoading={isLoading}
             >
-              {!isLoading ? "Add" : <Spinner size={"sm"} />}
+              {"Add"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

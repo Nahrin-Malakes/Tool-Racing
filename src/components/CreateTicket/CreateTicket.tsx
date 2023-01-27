@@ -11,8 +11,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Select } from "chakra-react-select";
@@ -35,6 +35,7 @@ let vehicles: Vehicles[] = [];
 
 export const CreateTicket = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const initialRef = React.useRef(null);
   const [ownerId, setOwnerId] = useState("");
   const [vehicleId, setVehicleId] = useState("");
@@ -83,13 +84,26 @@ export const CreateTicket = () => {
     }
   }, [vehiclesData]);
 
-  const handleCreate = async () => {
-    await mutateAsync({
-      diagnostic,
-      fixed: fixed == "Yes" ? "Yes" : "No",
-      ownerId,
-      vehicleId,
-    });
+  const handleCreate = () => {
+    void mutateAsync(
+      {
+        diagnostic,
+        fixed: fixed == "Yes" ? "Yes" : "No",
+        ownerId,
+        vehicleId,
+      },
+      {
+        onSuccess() {
+          toast({
+            title: "Owner created",
+            description: "We've created the ticket for you",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -147,8 +161,13 @@ export const CreateTicket = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => void handleCreate}>
-              {isLoading ? <Spinner size={"sm"} /> : "Create"}
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => void handleCreate()}
+              isLoading={isLoading}
+            >
+              {"Create"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

@@ -14,7 +14,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -25,7 +24,7 @@ import { api } from "../../utils/api";
 export const AddOwner = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const utils = api.useContext();
-  const { mutateAsync, isLoading, isSuccess } = api.owner.add.useMutation({
+  const { mutateAsync, isLoading } = api.owner.add.useMutation({
     onError(error) {
       toast({
         title: "Error",
@@ -51,20 +50,23 @@ export const AddOwner = () => {
   const initialRef = React.useRef(null);
 
   const handleSubmit = async () => {
-    await mutateAsync({
-      mobile,
-      name,
-    });
-
-    if (isSuccess) {
-      toast({
-        title: "Owner created",
-        description: "We've created the owner for you",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
+    await mutateAsync(
+      {
+        mobile,
+        name,
+      },
+      {
+        onSuccess() {
+          toast({
+            title: "Owner created",
+            description: "We've created the owner for you",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -105,8 +107,9 @@ export const AddOwner = () => {
               colorScheme="blue"
               mr={3}
               onClick={() => void handleSubmit()}
+              isLoading={isLoading}
             >
-              {!isLoading ? "Add" : <Spinner size={"sm"} />}
+              {"Add"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
