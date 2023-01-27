@@ -27,7 +27,7 @@ export const MainContent = () => {
 
   return (
     <Box p={4}>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <Grid templateColumns={{ md: "repeat(3, 1fr)" }} gap={6}>
         {activeTickets?.data &&
           activeTickets.data.map((ticket) => (
             <GridItem
