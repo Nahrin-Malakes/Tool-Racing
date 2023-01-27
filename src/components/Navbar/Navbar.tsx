@@ -17,7 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
-import { CreateTicket } from "../";
+import { AddVehicle, CreateTicket } from "../";
+import { AddOwner } from "../../components";
 
 const Links = [{ name: "Dashboard", href: "/" }];
 
@@ -78,8 +79,9 @@ export const Navbar = () => {
                 Action
               </MenuButton>
               <MenuList>
+                <AddOwner />
+                <AddVehicle />
                 <CreateTicket />
-                <MenuItem>Link 2</MenuItem>
               </MenuList>
             </Menu>
             <Menu>

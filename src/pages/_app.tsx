@@ -11,7 +11,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <ChakraProvider>
+      <ChakraProvider resetCSS={true}>
         <Component {...pageProps} />
       </ChakraProvider>
     </SessionProvider>

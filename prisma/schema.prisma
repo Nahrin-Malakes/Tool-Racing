@@ -15,21 +15,23 @@ datasource db {
 }
 
 model Ticket {
-  id       String    @id @default(cuid())
-  ownerId String
-  owner   Owner  @relation(fields: [ownerId], references: [id])
+  id         String  @id @default(cuid())
+  ownerId    String
+  owner      Owner   @relation(fields: [ownerId], references: [id])
   diagnostic String
-  fixes Boolean @default(false)
+  fixed      Boolean @default(false)
+
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Owner {
-  id       String    @id @default(cuid())
-  name     String
-  mobile   String
-  vehicles Vehicle[]
+  id      String   @id @default(cuid())
+  name    String
+  mobile  String   @unique
   tickets Ticket[]
 
   createdAt DateTime @default(now())
@@ -37,12 +39,10 @@ model Owner {
 }
 
 model Vehicle {
-  id      String  @id @default(cuid())
-  model   String
-  year    String
-
-  ownerId String
-  owner   Owner  @relation(fields: [ownerId], references: [id])
+  id     String   @id @default(cuid())
+  model  String
+  year   String
+  ticket Ticket[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
