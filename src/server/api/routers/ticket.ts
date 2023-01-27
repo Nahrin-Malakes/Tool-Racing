@@ -106,5 +106,36 @@ export const ticketRouter = createTRPCRouter({
 
     return { data: vehicles };
   }),
+  getActive: protectedProcedure.query(async ({ ctx }) => {
+    const tickets = await ctx.prisma.ticket.findMany({
+      where: {
+        fixed: false,
+      },
+      include: {
+        owner: true,
+        vehicle: true,
+      },
+    });
+
+    return { data: tickets };
+  }),
+  setFixed: protectedProcedure
+    .input(
+      z.object({
+        ticketId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.ticket.update({
+        where: {
+          id: input.ticketId,
+        },
+        data: {
+          fixed: true,
+        },
+      });
+
+      return { data: "Ticket has been set as fixed and archived" };
+    }),
 });
 

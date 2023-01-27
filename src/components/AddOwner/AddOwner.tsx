@@ -31,6 +31,7 @@ export const AddOwner = () => {
         description: error.message,
         status: "error",
         duration: 9000,
+        position: "top",
         isClosable: true,
       });
 
@@ -62,8 +63,11 @@ export const AddOwner = () => {
             description: "We've created the owner for you",
             status: "success",
             duration: 9000,
+            position: "top",
             isClosable: true,
           });
+
+          onClose();
         },
       }
     );

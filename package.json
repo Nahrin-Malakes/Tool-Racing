@@ -23,6 +23,7 @@
     "@trpc/server": "^10.8.1",
     "chakra-react-select": "^4.4.3",
     "framer-motion": "^8.5.3",
+    "moment": "^2.29.4",
     "next": "13.1.2",
     "next-auth": "^4.18.7",
     "react": "18.2.0",

@@ -48,15 +48,11 @@ export const AddVehicle = () => {
         title: "Error",
         description: error.message,
         status: "error",
+        position: "top",
         duration: 9000,
         isClosable: true,
       });
       return null;
-    },
-    async onSuccess() {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      await utils.invalidate(["vehicle.getAll"]);
     },
   });
 
@@ -87,9 +83,14 @@ export const AddVehicle = () => {
             title: "Vehicle created",
             description: "We've created the vehicle for you.",
             status: "success",
+            position: "top",
             duration: 9000,
             isClosable: true,
           });
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          void utils.invalidate(["vehicle.getAll"]);
+          onClose();
         },
       }
     );

@@ -42,6 +42,7 @@ export const CreateTicket = () => {
   const [diagnostic, setDiagnostic] = useState("");
   const [fixed, setFixed] = useState("");
 
+  const utils = api.useContext();
   const { mutateAsync, isLoading } = api.ticket.add.useMutation();
   const { data: ownersData } = api.owner.getAll.useQuery(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -98,9 +99,14 @@ export const CreateTicket = () => {
             title: "Owner created",
             description: "We've created the ticket for you",
             status: "success",
+            position: "top",
             duration: 9000,
             isClosable: true,
           });
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          void utils.invalidate(["ticket.getActive"]);
+          onClose();
         },
       }
     );
