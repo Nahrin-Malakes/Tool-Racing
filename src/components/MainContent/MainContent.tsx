@@ -20,7 +20,11 @@ export const MainContent = () => {
   const toast = useToast();
 
   if (isLoading) {
-    return <Spinner size={"lg"} />;
+    return (
+      <Center mt={"4"}>
+        <Spinner size={"xl"} />
+      </Center>
+    );
   }
 
   console.log(activeTickets);
