@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
-import { CreateTicket } from "../CreateTicket/CreateTicket";
+import { CreateTicket } from "../";
 
 const Links = [{ name: "Dashboard", href: "/" }];
 
