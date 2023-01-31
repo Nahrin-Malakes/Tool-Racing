@@ -104,7 +104,13 @@ export const Navbar = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Link 2</MenuItem>
+                <MenuItem
+                  as={Link}
+                  href={"/db"}
+                  css={{ ":hover": { textDecoration: "none" } }}
+                >
+                  Vehicles Database
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem
                   textColor={"red.500"}

@@ -6,6 +6,7 @@ import { Headers } from "./Headers/Headers";
 import { MainContent } from "./MainContent/MainContent";
 import { AddOwner } from "./AddOwner/AddOwner";
 import { AddVehicle } from "./AddVehicle/AddVehicle";
+import { SearchVehicleDB } from "./SearchVehicleDB/SearchVehicleDB";
 
 export {
   Navbar,
@@ -16,5 +17,6 @@ export {
   MainContent,
   AddOwner,
   AddVehicle,
+  SearchVehicleDB,
 };
 

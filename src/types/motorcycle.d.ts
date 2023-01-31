@@ -1,0 +1,31 @@
+export interface Motorcycle {
+  bore_stroke: string;
+  clutch: string;
+  cooling: string;
+  displacement: string;
+  dry_weight: string;
+  engine: string;
+  frame: string;
+  front_brakes: string;
+  front_suspension: string;
+  front_tire: string;
+  front_wheel_travel: string;
+  fuel_capacity: string;
+  fuel_system: string;
+  gearbox: string;
+  ground_clearance: string;
+  ignition: string;
+  lubrication: string;
+  make: string;
+  model: string;
+  power: string;
+  rear_brakes: string;
+  rear_suspension: string;
+  rear_tire: string;
+  rear_wheel_travel: string;
+  seat_height: string;
+  starter: string;
+  transmission: string;
+  type: string;
+  year: string;
+}
