@@ -17,8 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
+
 import { AddVehicle, CreateTicket } from "../";
 import { AddOwner } from "../../components";
+import Image from "next/image";
+import Logo from "../../assets/tool-racing.png";
 
 const Links = [{ name: "Dashboard", href: "/" }];
 
@@ -53,7 +56,9 @@ export const Navbar = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Garaging</Box>
+            <HStack>
+              <Image src={Logo} width={50} height={50} alt="Tool Racing" />
+            </HStack>
             <HStack
               as={"nav"}
               spacing={4}
