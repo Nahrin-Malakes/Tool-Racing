@@ -14,17 +14,17 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import type { Dispatch, SetStateAction } from "react";
+import { api } from "../../utils/api";
 
 import type { Motorcycle } from "../../types/motorcycle";
-import { env } from "../../env/client.mjs";
 
 interface ModalProps {
   setMake: Dispatch<SetStateAction<string>>;
   setModel: Dispatch<SetStateAction<string>>;
   setYear: Dispatch<SetStateAction<string>>;
-  setData: Dispatch<SetStateAction<Motorcycle[]>>;
+  setData: Dispatch<SetStateAction<Motorcycle[] | undefined>>;
   make: string;
   model: string;
   year: string;
@@ -41,24 +41,23 @@ export const SearchVehicleDB = ({
 }: ModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
-  const [loading, setLoading] = useState(false);
+
+  const { mutateAsync, isLoading } = api.vehiclesDB.get.useMutation();
 
   const handleSearch = async () => {
-    setLoading(true);
-    const res = await fetch(
-      `https://api.api-ninjas.com/v1/motorcycles?make=${make}&model=${model}&year=${year}&offset=0`,
+    await mutateAsync(
       {
-        headers: {
-          "X-Api-Key": env.NEXT_PUBLIC_MOTORCYCLES_API_KEY,
+        make,
+        model,
+        year,
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          setData(data);
         },
       }
     );
-    setLoading(false);
-    const data: Motorcycle[] = (await res.json()) as Motorcycle[];
-
-    console.log(data);
-
-    setData(data);
   };
 
   return (
@@ -104,7 +103,7 @@ export const SearchVehicleDB = ({
               colorScheme="blue"
               mr={3}
               onClick={() => void handleSearch()}
-              isLoading={loading}
+              isLoading={isLoading}
             >
               Search
             </Button>

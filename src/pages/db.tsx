@@ -1,20 +1,18 @@
 import {
   TableContainer,
   Table,
-  TableCaption,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Tfoot,
   Box,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useState } from "react";
 
 import { SearchVehicleDB } from "../components";
-import { Motorcycle } from "../types/motorcycle";
+import type { Motorcycle } from "../types/motorcycle";
 
 const VehiclesDB: NextPage = () => {
   const [make, setMake] = useState("");

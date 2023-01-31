@@ -21,6 +21,7 @@ export const serverSchema = z.object({
   ),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  MOTORCYCLES_API_KEY: z.string(),
 });
 
 /**
@@ -35,6 +36,7 @@ export const serverEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  MOTORCYCLES_API_KEY: process.env.MOTORCYCLES_API_KEY,
 };
 
 /**
@@ -44,7 +46,6 @@ export const serverEnv = {
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_CLIENTVAR: z.string(),
-  NEXT_PUBLIC_MOTORCYCLES_API_KEY: z.string(),
 });
 
 /**
@@ -55,6 +56,5 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-  NEXT_PUBLIC_MOTORCYCLES_API_KEY: process.env.NEXT_PUBLIC_MOTORCYCLES_API_KEY,
 };
 
