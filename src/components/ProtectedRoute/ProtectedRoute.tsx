@@ -10,6 +10,10 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     void router.push("/api/auth/signin");
   }
 
-  return <>{children}</>;
+  if (sessionStatus === "authenticated") {
+    return <>{children}</>;
+  }
+
+  return <></>;
 };
 
