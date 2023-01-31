@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import { api } from "../utils/api";
+import { Headers } from "../components";
 
 const config = {
   initialColorMode: "dark",
@@ -20,6 +21,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <ChakraProvider resetCSS={true} theme={theme}>
+        <Headers />
         <Component {...pageProps} />
       </ChakraProvider>
     </SessionProvider>
