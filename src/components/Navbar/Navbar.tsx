@@ -55,10 +55,7 @@ export const Navbar = () => {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={"center"}>
-            <HStack>
-              <Image src={Logo} width={50} height={50} alt="Tool Racing" />
-            </HStack>
+          <HStack spacing={8}>
             <HStack
               as={"nav"}
               spacing={4}
@@ -71,6 +68,11 @@ export const Navbar = () => {
               ))}
             </HStack>
           </HStack>
+          <Flex justifyContent="center">
+            <HStack as={Link} href="/">
+              <Image src={Logo} width={70} height={70} alt="Tool Racing" />
+            </HStack>
+          </Flex>
           <Flex alignItems={"center"}>
             <Menu>
               <MenuButton
@@ -143,4 +145,3 @@ export const Navbar = () => {
     </>
   );
 };
-
