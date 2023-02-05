@@ -37,27 +37,30 @@ const Analytics: NextPage = () => {
             How We Doing Today?
           </chakra.h1>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-            {activeTicketsData && (
-              <StatsCard
-                title={"We currently have"}
-                stat={`${activeTicketsData.count} vehicles`}
-                loading={isLoadingActiveTickets}
-              />
-            )}
-            {fixedTodayData && (
-              <StatsCard
-                title={"Fixed today"}
-                loading={isLoadingFixedToday}
-                stat={`${fixedTodayData.data} vehicles`}
-              />
-            )}
-            {newTicketsData && (
-              <StatsCard
-                title={"New"}
-                stat={`${newTicketsData.data} tickets created today`}
-                loading={isLoadingNewTickets}
-              />
-            )}
+            <StatsCard
+              title={"We currently have"}
+              stat={
+                activeTicketsData &&
+                activeTicketsData.count.toString() + " " + "vehicles"
+              }
+              loading={isLoadingActiveTickets}
+            />
+            <StatsCard
+              title={"Fixed today"}
+              loading={isLoadingFixedToday}
+              stat={
+                fixedTodayData &&
+                fixedTodayData.data.toString() + " " + "vehicles"
+              }
+            />
+            <StatsCard
+              title={"New"}
+              stat={
+                newTicketsData &&
+                newTicketsData.data.toString() + " " + "tickets created today"
+              }
+              loading={isLoadingNewTickets}
+            />
           </SimpleGrid>
         </Box>
       </Box>
@@ -69,7 +72,7 @@ export default Analytics;
 
 interface StatsCardProps {
   title: string;
-  stat: string;
+  stat: string | 0 | undefined;
   loading: boolean;
 }
 
