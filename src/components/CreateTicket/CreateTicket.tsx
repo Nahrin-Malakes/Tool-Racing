@@ -105,7 +105,7 @@ export const CreateTicket = () => {
           });
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          void utils.invalidate(["ticket.getActive"]);
+          void utils.invalidate(["ticket.getActive", "ticket.newTickets"]);
           onClose();
         },
       }

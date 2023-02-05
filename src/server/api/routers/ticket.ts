@@ -116,8 +116,13 @@ export const ticketRouter = createTRPCRouter({
         vehicle: true,
       },
     });
+    const activeTicketsCount = await ctx.prisma.ticket.count({
+      where: {
+        fixed: false,
+      },
+    });
 
-    return { data: tickets };
+    return { data: tickets, count: activeTicketsCount };
   }),
   setFixed: protectedProcedure
     .input(
@@ -137,5 +142,55 @@ export const ticketRouter = createTRPCRouter({
 
       return { data: "Ticket has been set as fixed and archived" };
     }),
+
+  fixedToday: protectedProcedure.query(async ({ ctx }) => {
+    const today = new Date();
+
+    const tickets = await ctx.prisma.ticket.count({
+      where: {
+        fixed: true,
+        AND: {
+          updatedAt: {
+            gte: new Date(
+              Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+            ),
+            lte: new Date(
+              Date.UTC(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate() + 1
+              )
+            ),
+          },
+        },
+      },
+    });
+
+    return { data: tickets };
+  }),
+  newTickets: protectedProcedure.query(async ({ ctx }) => {
+    const today = new Date();
+
+    const tickets = await ctx.prisma.ticket.count({
+      where: {
+        AND: {
+          createdAt: {
+            gte: new Date(
+              Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+            ),
+            lte: new Date(
+              Date.UTC(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate() + 1
+              )
+            ),
+          },
+        },
+      },
+    });
+
+    return { data: tickets };
+  }),
 });
 

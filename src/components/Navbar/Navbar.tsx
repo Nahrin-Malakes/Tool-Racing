@@ -23,7 +23,10 @@ import { AddOwner } from "../../components";
 import Image from "next/image";
 import Logo from "../../assets/tool-racing.png";
 
-const Links = [{ name: "Dashboard", href: "/" }];
+const Links = [
+  { name: "Dashboard", href: "/" },
+  { name: "Analytics", href: "/analytics" },
+];
 
 const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link
