@@ -1,5 +1,5 @@
 {
-  "name": "garaging",
+  "name": "tool-racing",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -47,3 +47,4 @@
     "initVersion": "7.3.2"
   }
 }
+

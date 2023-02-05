@@ -1,7 +1,7 @@
 {
-  "name": "Garagin",
-  "short_name": "gr",
-  "start_URL": "https://garaging.vercel.app",
+  "name": "Tool Racing",
+  "short_name": "tr",
+  "start_URL": "https://tool-racing.vercel.app",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

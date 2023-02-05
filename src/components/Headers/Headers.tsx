@@ -3,8 +3,8 @@ import Head from "next/head";
 export const Headers = () => {
   return (
     <Head>
-      <title>Garaging</title>
-      <meta name="description" content="The new way to manage your garage." />
+      <title>Tool Racing</title>
+      <meta name="description" content="Tool Racing's managemen app" />
       <meta name="referrer" content="no-referrer" />
       <link rel="icon" href="/favicon.ico" />
       <link

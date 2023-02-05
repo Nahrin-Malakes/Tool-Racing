@@ -1,1 +1,2 @@
-Just wonderd if I'm able to male a garage managment app
+Just wonderd if I'm able to make a garage managment app
+
