@@ -103,6 +103,7 @@ export const Navbar = () => {
                 minW={0}
               >
                 <Avatar
+                  aria-label={sessionData?.user?.name as string}
                   referrerPolicy="no-referrer"
                   size={"sm"}
                   src={sessionData?.user?.image as string}
@@ -110,12 +111,30 @@ export const Navbar = () => {
               </MenuButton>
               <MenuList>
                 <MenuItem
+                  css={{
+                    ":hover": { textDecoration: "none" },
+                    cursor: "default",
+                  }}
+                >
+                  {sessionData?.user?.name}
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem
                   as={Link}
                   href={"/db"}
                   css={{ ":hover": { textDecoration: "none" } }}
                 >
                   Vehicles Database
                 </MenuItem>
+                {sessionData?.user?.role === "ADMIN" && (
+                  <MenuItem
+                    as={Link}
+                    href={"/admin"}
+                    css={{ ":hover": { textDecoration: "none" } }}
+                  >
+                    Admin Panel
+                  </MenuItem>
+                )}
                 <MenuDivider />
                 <MenuItem
                   textColor={"red.500"}
