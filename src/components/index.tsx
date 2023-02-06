@@ -1,12 +1,13 @@
-import { Navbar } from "./Navbar/Navbar";
-import { CreateTicket } from "./CreateTicket/CreateTicket";
-import { ProtectedRoute } from "./ProtectedRoute/ProtectedRoute";
-import { Footer } from "./Footer/Footer";
-import { Headers } from "./Headers/Headers";
-import { MainContent } from "./MainContent/MainContent";
-import { AddOwner } from "./AddOwner/AddOwner";
-import { AddVehicle } from "./AddVehicle/AddVehicle";
-import { SearchVehicleDB } from "./SearchVehicleDB/SearchVehicleDB";
+import { Navbar } from "@/components/Navbar/Navbar";
+import { CreateTicket } from "@/components/CreateTicket/CreateTicket";
+import { ProtectedRoute } from "@/components/ProtectedRoute/ProtectedRoute";
+import { Footer } from "@/components/Footer/Footer";
+import { Headers } from "@/components/Headers/Headers";
+import { MainContent } from "@/components/MainContent/MainContent";
+import { AddOwner } from "@/components/AddOwner/AddOwner";
+import { AddVehicle } from "@/components/AddVehicle/AddVehicle";
+import { SearchVehicleDB } from "@/components/SearchVehicleDB/SearchVehicleDB";
+import { Layout } from "@/components/Layout/Layout";
 
 export {
   Navbar,
@@ -18,5 +19,6 @@ export {
   AddOwner,
   AddVehicle,
   SearchVehicleDB,
+  Layout,
 };
 

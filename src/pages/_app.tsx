@@ -3,8 +3,8 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
-import { api } from "../utils/api";
-import { Headers } from "../components";
+import { api } from "@/utils/api";
+import { Headers } from "@/components/index";
 
 const config = {
   initialColorMode: "dark",

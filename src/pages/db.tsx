@@ -11,8 +11,8 @@ import {
 import type { NextPage } from "next";
 import { useState } from "react";
 
-import { Navbar, SearchVehicleDB } from "../components";
-import type { Motorcycle } from "../types/motorcycle";
+import { Navbar, SearchVehicleDB } from "@/components/index";
+import type { Motorcycle } from "@/types/motorcycle";
 
 const VehiclesDB: NextPage = () => {
   const [make, setMake] = useState("");

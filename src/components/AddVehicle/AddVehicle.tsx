@@ -17,7 +17,7 @@ import {
 import { Select } from "chakra-react-select";
 import React, { useEffect, useState } from "react";
 
-import { api } from "../../utils/api";
+import { api } from "@/utils/api";
 
 type Owners = {
   value?: string;

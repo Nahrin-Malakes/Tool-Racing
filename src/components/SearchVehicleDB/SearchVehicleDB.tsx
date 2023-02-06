@@ -16,9 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import { api } from "../../utils/api";
 
-import type { Motorcycle } from "../../types/motorcycle";
+import { api } from "@/utils/api";
+import type { Motorcycle } from "@/types/motorcycle";
 
 interface ModalProps {
   setMake: Dispatch<SetStateAction<string>>;

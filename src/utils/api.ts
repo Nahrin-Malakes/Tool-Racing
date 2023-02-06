@@ -1,16 +1,9 @@
-/**
- * This is the client-side entrypoint for your tRPC API.
- * It's used to create the `api` object which contains the Next.js App-wrapper
- * as well as your typesafe react-query hooks.
- *
- * We also create a few inference helpers for input and output types
- */
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 
-import { type AppRouter } from "../server/api/root";
+import { type AppRouter } from "@/server/api/root";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -63,3 +56,4 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
  * @example type HelloOutput = RouterOutputs['example']['hello']
  **/
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
+

@@ -1,9 +1,6 @@
 import { type NextPage } from "next";
 
-// import { api } from "../utils/api";
-
-import { ProtectedRoute } from "../components";
-import { Layout } from "../components/Layout/Layout";
+import { ProtectedRoute, Layout } from "@/components/index";
 
 const Home: NextPage = () => {
   return (

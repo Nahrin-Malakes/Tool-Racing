@@ -11,7 +11,7 @@ import {
 import { Select } from "chakra-react-select";
 import moment from "moment";
 
-import { api } from "../../utils/api";
+import { api } from "@/utils/api";
 
 export const MainContent = () => {
   const { data: activeTickets, isLoading } = api.ticket.getActive.useQuery();

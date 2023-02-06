@@ -16,12 +16,11 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 
-import { AddVehicle, CreateTicket } from "../";
-import { AddOwner } from "../../components";
-import Image from "next/image";
-import Logo from "../../assets/tool-racing.png";
+import { AddVehicle, CreateTicket, AddOwner } from "@/components/index";
+import Logo from "@/assets/tool-racing.png";
 
 const Links = [
   { name: "Dashboard", href: "/" },
@@ -103,6 +102,7 @@ export const Navbar = () => {
                 minW={0}
               >
                 <Avatar
+                  name={sessionData?.user && (sessionData.user.name as string)}
                   aria-label={sessionData?.user?.name as string}
                   referrerPolicy="no-referrer"
                   size={"sm"}

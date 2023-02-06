@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { env } from "../../../env/server.mjs";
-import type { Motorcycle } from "../../../types/motorcycle.js";
+import { env } from "@/env/server.mjs";
+import type { Motorcycle } from "@/types/motorcycle.js";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const vehiclesDBRouter = createTRPCRouter({
   get: protectedProcedure

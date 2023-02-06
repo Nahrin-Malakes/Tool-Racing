@@ -1,8 +1,8 @@
 import { Box, Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
-import { Navbar, ProtectedRoute } from "../components";
-import { api } from "../utils/api";
+import { Navbar, ProtectedRoute } from "@/components/index";
+import { api } from "@/utils/api";
 
 const AdminPanel: NextPage = () => {
   const { data: sessions } = api.admin.getAllSessions.useQuery();

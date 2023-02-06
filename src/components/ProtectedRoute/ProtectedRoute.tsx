@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Center, Spinner } from "@chakra-ui/react";
 
 export const ProtectedRoute = ({
   children,
@@ -13,7 +14,11 @@ export const ProtectedRoute = ({
   const router = useRouter();
 
   if (sessionStatus === "loading") {
-    return <p>Loading...</p>;
+    return (
+      <Center mt={8}>
+        <Spinner size={"xl"} />
+      </Center>
+    );
   }
 
   if (sessionStatus === "unauthenticated") {

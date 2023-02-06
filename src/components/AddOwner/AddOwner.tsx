@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import { api } from "../../utils/api";
+import { api } from "@/utils/api";
 
 export const AddOwner = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

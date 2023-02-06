@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedAdminProcedure } from "../trpc";
+import { createTRPCRouter, protectedAdminProcedure } from "@/server/api/trpc";
 
 export const adminRouter = createTRPCRouter({
   getAllSessions: protectedAdminProcedure.query(async ({ ctx }) => {

@@ -1,4 +1,4 @@
-import { Navbar, MainContent } from "../";
+import { Navbar, MainContent } from "@/components/index";
 
 export const Layout = () => {
   return (

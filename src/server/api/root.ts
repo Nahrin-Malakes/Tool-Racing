@@ -1,9 +1,11 @@
-import { createTRPCRouter } from "./trpc";
-import { ownerRouter } from "./routers/owner";
-import { vehicleRouter } from "./routers/vehicle";
-import { ticketRouter } from "./routers/ticket";
-import { vehiclesDBRouter } from "./routers/vehiclesdb";
-import { adminRouter } from "./routers/admin";
+import { createTRPCRouter } from "@/server/api/trpc";
+import {
+  ownerRouter,
+  ticketRouter,
+  vehicleRouter,
+  vehiclesDBRouter,
+  adminRouter,
+} from "@/server/api/routers";
 
 /**
  * This is the primary router for your server.
