@@ -41,6 +41,7 @@ export const AddOwner = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       await utils.invalidate(["owner.getAll"]);
+      onClose();
     },
   });
 
