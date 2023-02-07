@@ -10,8 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import moment from "moment";
+import Image from "next/image";
 
 import { api } from "@/utils/api";
+import ToolRacingLogo from "@/assets/tool-racing.png";
 
 export const MainContent = () => {
   const { data: activeTickets, isLoading } = api.ticket.getActive.useQuery();
@@ -21,8 +23,29 @@ export const MainContent = () => {
 
   if (isLoading) {
     return (
-      <Center mt={"4"}>
-        <Spinner size={"xl"} />
+      <Center mt={"8"}>
+        <style>
+          {`
+          .rotate {
+            width: 100px;
+            animation: rotation 2s infinite linear;
+          }
+            @keyframes rotation {
+              from {
+                transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(359deg);
+              }
+            }`}
+        </style>
+        <Image
+          className="rotate"
+          src={"/android-chrome-384x384.png"}
+          width={100}
+          height={100}
+          alt="Tool Racing"
+        />
       </Center>
     );
   }

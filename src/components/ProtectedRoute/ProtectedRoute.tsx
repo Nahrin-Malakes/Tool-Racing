@@ -13,14 +13,6 @@ export const ProtectedRoute = ({
   const { status: sessionStatus, data } = useSession();
   const router = useRouter();
 
-  if (sessionStatus === "loading") {
-    return (
-      <Center mt={8}>
-        <Spinner size={"xl"} />
-      </Center>
-    );
-  }
-
   if (sessionStatus === "unauthenticated") {
     void router.push("/api/auth/signin");
     return <p>Access Denied</p>;
