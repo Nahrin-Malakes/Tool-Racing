@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Center, Spinner } from "@chakra-ui/react";
 
 export const ProtectedRoute = ({
   children,

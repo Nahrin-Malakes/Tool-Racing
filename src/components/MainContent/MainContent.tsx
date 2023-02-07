@@ -3,7 +3,6 @@ import {
   Center,
   Grid,
   GridItem,
-  Spinner,
   Text,
   Tooltip,
   useToast,
@@ -13,7 +12,6 @@ import moment from "moment";
 import Image from "next/image";
 
 import { api } from "@/utils/api";
-import ToolRacingLogo from "@/assets/tool-racing.png";
 
 export const MainContent = () => {
   const { data: activeTickets, isLoading } = api.ticket.getActive.useQuery();
