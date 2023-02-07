@@ -10,7 +10,7 @@ export const ProtectedRoute = ({
   children: ReactNode;
   adminOnly?: boolean;
 }) => {
-  const { status: sessionStatus, data } = useSession();
+  const { status: sessionStatus, data: sessionData } = useSession();
   const router = useRouter();
 
   if (sessionStatus === "unauthenticated") {
@@ -18,11 +18,15 @@ export const ProtectedRoute = ({
     return <p>Access Denied</p>;
   }
 
-  if (adminOnly && data?.user?.role !== "ADMIN") {
+  if (
+    adminOnly &&
+    sessionData &&
+    sessionData.user &&
+    sessionData.user.role === "USER"
+  ) {
     void router.push("/api/auth/signin");
     return <p>Access Denied</p>;
   }
 
   return <>{children}</>;
 };
-
