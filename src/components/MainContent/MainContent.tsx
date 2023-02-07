@@ -41,7 +41,7 @@ export const MainContent = () => {
         </style>
         <Image
           className="rotate"
-          src={"/android-chrome-384x384.png"}
+          src={"/icon-384x384.png"}
           width={100}
           height={100}
           alt="Tool Racing"
