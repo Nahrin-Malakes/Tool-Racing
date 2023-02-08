@@ -38,30 +38,30 @@ export const vehicleRouter = createTRPCRouter({
   remove: protectedProcedure
     .input(
       z.object({
-        mobile: z.string(),
+        id: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const owner = await ctx.prisma.owner.findUnique({
+      const vehicle = await ctx.prisma.vehicle.findUnique({
         where: {
-          mobile: input.mobile,
+          id: input.id,
         },
       });
-      if (!owner) {
+      if (!vehicle) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Owner does not exists",
-          cause: "Owner does not exists",
+          message: "Vehicle does not exists",
+          cause: "Vehicle does not exists",
         });
       }
 
-      await ctx.prisma.owner.delete({
+      await ctx.prisma.vehicle.delete({
         where: {
-          mobile: input.mobile,
+          id: input.id,
         },
       });
 
-      return { data: "Owner was removed successfully" };
+      return { data: "Vehicle was removed successfully" };
     }),
   getByMobile: protectedProcedure
     .input(
@@ -90,5 +90,32 @@ export const vehicleRouter = createTRPCRouter({
 
     return { data: vehicles };
   }),
+  getAllInfinite: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+
+      const vehiclesCount = await ctx.prisma.vehicle.count();
+      const vehicles = await ctx.prisma.vehicle.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (vehicles.length > limit) {
+        const nextItem = vehicles.pop();
+        nextCursor = nextItem && nextItem.id;
+      }
+
+      return { vehicles, nextCursor, vehiclesCount };
+    }),
 });
 
