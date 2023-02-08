@@ -19,6 +19,31 @@ export const MainContent = () => {
   const utils = api.useContext();
   const toast = useToast();
 
+  const handleFixed = async (ticketId: string) => {
+    await mutateAsync(
+      {
+        ticketId,
+      },
+      {
+        async onSuccess() {
+          const invalidateActiveTickets = utils.ticket.getActive.invalidate();
+          const invalidateNewTickets = utils.ticket.newTickets.invalidate();
+
+          await Promise.all([invalidateActiveTickets, invalidateNewTickets]);
+
+          toast({
+            title: "Ticket archived",
+            description: "Ticket has been closed and archived",
+            status: "success",
+            duration: 9000,
+            position: "top",
+            isClosable: true,
+          });
+        },
+      }
+    );
+  };
+
   if (isLoading) {
     return (
       <Center mt={"8"}>
@@ -83,32 +108,7 @@ export const MainContent = () => {
                 <Select
                   options={[{ label: "Yes" }, { label: "No" }]}
                   defaultValue={[{ label: "No" }]}
-                  onChange={() => {
-                    void mutateAsync(
-                      {
-                        ticketId: ticket.id,
-                      },
-                      {
-                        onSuccess() {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          void utils.invalidate([
-                            "ticket.getActive",
-                            "ticket.newTickets",
-                          ]);
-
-                          toast({
-                            title: "Ticket archived",
-                            description: "Ticket has been closed and archived",
-                            status: "success",
-                            duration: 9000,
-                            position: "top",
-                            isClosable: true,
-                          });
-                        },
-                      }
-                    );
-                  }}
+                  onChange={() => void handleFixed(ticket.id)}
                 />
               </Text>
               <Text mt={"2"}>

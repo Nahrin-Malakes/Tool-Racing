@@ -34,14 +34,7 @@ export const AddVehicle = () => {
   const toast = useToast();
 
   const utils = api.useContext();
-  const { data: ownersData } = api.owner.getAll.useQuery(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    {},
-    {
-      refetchOnWindowFocus: true,
-    }
-  );
+  const { data: ownersData } = api.owner.getAll.useQuery();
   const { mutateAsync, isLoading } = api.vehicle.add.useMutation({
     onError(error) {
       toast({
@@ -78,7 +71,7 @@ export const AddVehicle = () => {
         ownerMobile,
       },
       {
-        onSuccess() {
+        async onSuccess() {
           toast({
             title: "Vehicle created",
             description: "We've created the vehicle for you.",
@@ -87,9 +80,7 @@ export const AddVehicle = () => {
             duration: 9000,
             isClosable: true,
           });
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          void utils.invalidate(["vehicle.getAll"]);
+          await utils.vehicle.getAll.invalidate();
           onClose();
         },
       }

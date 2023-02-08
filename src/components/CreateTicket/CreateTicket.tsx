@@ -44,22 +44,8 @@ export const CreateTicket = () => {
 
   const utils = api.useContext();
   const { mutateAsync, isLoading } = api.ticket.add.useMutation();
-  const { data: ownersData } = api.owner.getAll.useQuery(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    {},
-    {
-      refetchOnWindowFocus: true,
-    }
-  );
-  const { data: vehiclesData } = api.vehicle.getAll.useQuery(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    {},
-    {
-      refetchOnWindowFocus: true,
-    }
-  );
+  const { data: ownersData } = api.owner.getAll.useQuery();
+  const { data: vehiclesData } = api.vehicle.getAll.useQuery();
 
   useEffect(() => {
     if (ownersData?.data) {
@@ -94,18 +80,20 @@ export const CreateTicket = () => {
         vehicleId,
       },
       {
-        onSuccess() {
+        async onSuccess() {
           toast({
-            title: "Owner created",
+            title: "Ticket created",
             description: "We've created the ticket for you",
             status: "success",
             position: "top",
             duration: 9000,
             isClosable: true,
           });
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          void utils.invalidate(["ticket.getActive", "ticket.newTickets"]);
+
+          const invalidateActiveTickets = utils.ticket.getActive.invalidate();
+          const invalidateNewTickets = utils.ticket.newTickets.invalidate();
+
+          await Promise.all([invalidateActiveTickets, invalidateNewTickets]);
           onClose();
         },
       }
