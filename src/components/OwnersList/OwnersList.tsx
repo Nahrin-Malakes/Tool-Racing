@@ -12,9 +12,10 @@ import {
   Box,
   useToast,
 } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 import { api } from "@/utils/api";
+import { EditOwner } from "@/components/index";
 
 export const OwnersList = () => {
   const toast = useToast();
@@ -83,7 +84,7 @@ export const OwnersList = () => {
                       <Td>{owner.name}</Td>
                       <Td>{owner.mobile}</Td>
                       <Td>
-                        <EditIcon cursor={"pointer"} fontSize={"l"} mr={"8"} />
+                        <EditOwner ownerMobile={owner.mobile} />
                         <DeleteIcon
                           cursor={"pointer"}
                           fontSize={"l"}

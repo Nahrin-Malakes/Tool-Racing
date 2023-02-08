@@ -90,5 +90,33 @@ export const ownerRouter = createTRPCRouter({
 
     return { data: owners };
   }),
+  edit: protectedProcedure
+    .input(z.object({ name: z.string(), mobile: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const owner = await ctx.prisma.owner.findUnique({
+        where: {
+          mobile: input.mobile,
+        },
+      });
+      if (!owner) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Owner does not exists.",
+          cause: "Owner does not exists.",
+        });
+      }
+
+      await ctx.prisma.owner.update({
+        where: {
+          id: owner.id,
+        },
+        data: {
+          name: input.name,
+          mobile: input.mobile,
+        },
+      });
+
+      return {};
+    }),
 });
 

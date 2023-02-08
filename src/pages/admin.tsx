@@ -1,8 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
 import { Navbar, OwnersList, ProtectedRoute } from "@/components/index";
-import { api } from "@/utils/api";
 
 const AdminPanel: NextPage = () => {
   return (
