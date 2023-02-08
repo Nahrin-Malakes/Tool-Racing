@@ -21,8 +21,18 @@ export const OwnersList = () => {
   const toast = useToast();
 
   const utils = api.useContext();
-  const { data: ownersData } = api.owner.getAll.useQuery();
+  const { data: ownersData, fetchNextPage } =
+    api.owner.getAllInfinite.useInfiniteQuery(
+      {
+        limit: 10,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
   const { mutateAsync } = api.owner.remove.useMutation();
+
+  // utils.owner.getAll.
 
   const handleRemove = async (mobile: string) => {
     await mutateAsync(
@@ -55,10 +65,25 @@ export const OwnersList = () => {
     );
   };
 
+  console.log(ownersData);
+
   return (
     <Flex flexDirection={"column"}>
       <Center>
         <Text fontSize={"3xl"}>Owners</Text>
+        <button
+          onClick={() => {
+            fetchNextPage()
+              .then((d) => {
+                console.log(d.data?.pages[0]);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }}
+        >
+          asdsadasd
+        </button>
       </Center>
       <Center>
         <Box w={"60%"}>
@@ -79,21 +104,24 @@ export const OwnersList = () => {
               </Thead>
               <Tbody>
                 {ownersData &&
-                  ownersData.data.map((owner) => (
-                    <Tr key={owner.mobile}>
-                      <Td>{owner.name}</Td>
-                      <Td>{owner.mobile}</Td>
-                      <Td>
-                        <EditOwner ownerMobile={owner.mobile} />
-                        <DeleteIcon
-                          cursor={"pointer"}
-                          fontSize={"l"}
-                          color="red"
-                          onClick={() => void handleRemove(owner.mobile)}
-                        />
-                      </Td>
-                    </Tr>
-                  ))}
+                  ownersData.pages &&
+                  ownersData.pages[ownersData.pages.length - 1]?.owners.map(
+                    (owner) => (
+                      <Tr key={owner.mobile}>
+                        <Td>{owner.name}</Td>
+                        <Td>{owner.mobile}</Td>
+                        <Td>
+                          <EditOwner ownerMobile={owner.mobile} />
+                          <DeleteIcon
+                            cursor={"pointer"}
+                            fontSize={"l"}
+                            color="red"
+                            onClick={() => void handleRemove(owner.mobile)}
+                          />
+                        </Td>
+                      </Tr>
+                    )
+                  )}
               </Tbody>
             </Table>
           </TableContainer>
@@ -102,4 +130,3 @@ export const OwnersList = () => {
     </Flex>
   );
 };
-

@@ -52,9 +52,9 @@ export const AddVehicle = () => {
   const initialRef = React.useRef(null);
 
   useEffect(() => {
-    if (ownersData?.data) {
+    if (ownersData && ownersData.owners) {
       owners = [];
-      ownersData.data.map((owner) => {
+      ownersData.owners.map((owner) => {
         owners.push({
           value: owner.mobile,
           label: owner.name + " - " + owner.mobile,
@@ -140,4 +140,3 @@ export const AddVehicle = () => {
     </>
   );
 };
-

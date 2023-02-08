@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import type { Owner } from "@prisma/client";
 
 export const ownerRouter = createTRPCRouter({
   add: protectedProcedure
@@ -85,10 +86,34 @@ export const ownerRouter = createTRPCRouter({
 
       return { data: owner };
     }),
+  getAllInfinite: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 50;
+      const { cursor } = input;
+
+      const ownersCount = await ctx.prisma.owner.count();
+      const owners = await ctx.prisma.owner.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (owners.length > limit) {
+        const nextItem = owners.pop();
+        nextCursor = nextItem!.id;
+      }
+
+      return { owners, nextCursor, ownersCount };
+    }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const owners = await ctx.prisma.owner.findMany();
 
-    return { data: owners };
+    return { owners };
   }),
   edit: protectedProcedure
     .input(z.object({ name: z.string(), mobile: z.string() }))
@@ -119,4 +144,3 @@ export const ownerRouter = createTRPCRouter({
       return {};
     }),
 });
-

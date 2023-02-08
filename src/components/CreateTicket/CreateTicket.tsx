@@ -48,9 +48,9 @@ export const CreateTicket = () => {
   const { data: vehiclesData } = api.vehicle.getAll.useQuery();
 
   useEffect(() => {
-    if (ownersData?.data) {
+    if (ownersData?.owners) {
       owners = [];
-      ownersData.data.map((owner) => {
+      ownersData.owners.map((owner) => {
         owners.push({
           value: owner.id,
           label: owner.name + " - " + owner.mobile,

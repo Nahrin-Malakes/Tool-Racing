@@ -4,10 +4,10 @@ import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 async function main() {
   for (let i = 0; i < 50; i++) {
-    await prisma.vehicle.create({
+    await prisma.owner.create({
       data: {
-        model: `${faker.vehicle.manufacturer()} ${faker.vehicle.model()}`,
-        year: faker.date.past().getFullYear().toString(),
+        name: faker.name.fullName(),
+        mobile: faker.phone.number(),
       },
     });
   }
