@@ -1,8 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
-import { Navbar, OwnersList, ProtectedRoute } from "@/components/index";
-import { VehicleList } from "@/components/OwnersList/OwnersList";
+import {
+  Navbar,
+  OwnersList,
+  ProtectedRoute,
+  VehiclesList,
+} from "@/components/index";
 
 const AdminPanel: NextPage = () => {
   return (
@@ -10,7 +14,7 @@ const AdminPanel: NextPage = () => {
       <Navbar />
       <Box p={8}>
         <OwnersList />
-        <VehicleList />
+        <VehiclesList />
       </Box>
     </ProtectedRoute>
   );

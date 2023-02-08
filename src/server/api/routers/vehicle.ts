@@ -63,27 +63,27 @@ export const vehicleRouter = createTRPCRouter({
 
       return { data: "Vehicle was removed successfully" };
     }),
-  getByMobile: protectedProcedure
+  getById: protectedProcedure
     .input(
       z.object({
-        mobile: z.string(),
+        id: z.string(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const owner = await ctx.prisma.owner.findUnique({
+      const vehicle = await ctx.prisma.vehicle.findUnique({
         where: {
-          mobile: input.mobile,
+          id: input.id,
         },
       });
-      if (!owner) {
+      if (!vehicle) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Owner does not exists",
-          cause: "Owner does not exists",
+          message: "Vehicle does not exists",
+          cause: "Vehicle does not exists",
         });
       }
 
-      return { data: owner };
+      return { data: vehicle };
     }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const vehicles = await ctx.prisma.vehicle.findMany();
@@ -116,6 +116,34 @@ export const vehicleRouter = createTRPCRouter({
       }
 
       return { vehicles, nextCursor, vehiclesCount };
+    }),
+  edit: protectedProcedure
+    .input(z.object({ year: z.string(), model: z.string(), id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const vehicle = await ctx.prisma.vehicle.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!vehicle) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Vehicle does not exists.",
+          cause: "Vehicle does not exists.",
+        });
+      }
+
+      await ctx.prisma.vehicle.update({
+        where: {
+          id: vehicle.id,
+        },
+        data: {
+          year: input.year,
+          model: input.model,
+        },
+      });
+
+      return {};
     }),
 });
 

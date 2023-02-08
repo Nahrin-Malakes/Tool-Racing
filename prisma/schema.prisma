@@ -17,12 +17,12 @@ datasource db {
 model Ticket {
   id         String  @id @default(cuid())
   ownerId    String
-  owner      Owner   @relation(fields: [ownerId], references: [id])
+  owner      Owner   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   diagnostic String
   fixed      Boolean @default(false)
 
   vehicleId String
-  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,8 +63,6 @@ model Account {
   id_token          String? // @db.Text
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
 }
 
 model Session {

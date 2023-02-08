@@ -10,6 +10,8 @@ import { SearchVehicleDB } from "@/components/SearchVehicleDB/SearchVehicleDB";
 import { Layout } from "@/components/Layout/Layout";
 import { OwnersList } from "@/components/OwnersList/OwnersList";
 import { EditOwner } from "@/components/EditOwner/EditOwner";
+import { VehiclesList } from "@/components/VehiclesList/VehiclesList";
+import { EditVehicle } from "@/components/EditVehicle/EditVehicle";
 
 export {
   Navbar,
@@ -24,5 +26,7 @@ export {
   Layout,
   OwnersList,
   EditOwner,
+  VehiclesList,
+  EditVehicle,
 };
 

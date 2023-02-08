@@ -1,34 +1,34 @@
-import { useState } from "react";
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
+  useToast,
+  Flex,
+  Center,
   TableContainer,
-  Table,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Center,
-  Text,
-  Flex,
-  Box,
-  useToast,
   Button,
+  Text,
+  Box,
+  Table,
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 
 import { api } from "@/utils/api";
-import { EditOwner } from "@/components/index";
+import { EditVehicle } from "@/components/index";
 
-export const OwnersList = () => {
+export const VehiclesList = () => {
   const toast = useToast();
   const [page, setPage] = useState(0);
 
   const utils = api.useContext();
   const {
-    data: ownersData,
+    data: vehiclesData,
     fetchNextPage,
     fetchPreviousPage,
-  } = api.owner.getAllInfinite.useInfiniteQuery(
+  } = api.vehicle.getAllInfinite.useInfiniteQuery(
     {
       limit: 10,
     },
@@ -36,24 +36,24 @@ export const OwnersList = () => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-  const { mutateAsync } = api.owner.remove.useMutation();
+  const { mutateAsync } = api.vehicle.remove.useMutation();
 
-  const handleRemove = async (mobile: string) => {
+  const handleRemove = async (id: string) => {
     await mutateAsync(
       {
-        mobile,
+        id,
       },
       {
         async onSuccess() {
           toast({
-            title: "Owner Removed",
-            description: "We've removed the owner for you",
+            title: "Vehicle Removed",
+            description: "We've removed the vehicle for you",
             status: "success",
             position: "top",
             duration: 9000,
             isClosable: true,
           });
-          await utils.owner.getAllInfinite.invalidate();
+          await utils.vehicle.getAllInfinite.invalidate();
         },
         onError(error) {
           toast({
@@ -70,9 +70,9 @@ export const OwnersList = () => {
   };
 
   return (
-    <Flex flexDirection={"column"}>
+    <Flex flexDirection={"column"} mt={8}>
       <Center>
-        <Text fontSize={"3xl"}>Owners</Text>
+        <Text fontSize={"3xl"}>Vehicles</Text>
       </Center>
       <Center>
         <Box w={"60%"}>
@@ -85,25 +85,25 @@ export const OwnersList = () => {
             <Table>
               <Thead>
                 <Tr>
-                  <Th>Name</Th>
-                  <Th>Phone Number</Th>
+                  <Th>Model</Th>
+                  <Th>Year</Th>
                   <Th>Action</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {ownersData &&
-                  ownersData.pages &&
-                  ownersData.pages[page]?.owners.map((owner) => (
-                    <Tr key={owner.mobile}>
-                      <Td>{owner.name}</Td>
-                      <Td>{owner.mobile}</Td>
+                {vehiclesData &&
+                  vehiclesData.pages &&
+                  vehiclesData.pages[page]?.vehicles.map((vehicle) => (
+                    <Tr key={vehicle.id}>
+                      <Td>{vehicle.model}</Td>
+                      <Td>{vehicle.year}</Td>
                       <Td>
-                        <EditOwner ownerMobile={owner.mobile} />
+                        <EditVehicle id={vehicle.id} />
                         <DeleteIcon
                           cursor={"pointer"}
                           fontSize={"l"}
                           color="red"
-                          onClick={() => void handleRemove(owner.mobile)}
+                          onClick={() => void handleRemove(vehicle.id)}
                         />
                       </Td>
                     </Tr>
@@ -123,10 +123,10 @@ export const OwnersList = () => {
               <Button
                 isDisabled={
                   Math.floor(
-                    (ownersData &&
-                      ownersData.pages &&
-                      ownersData.pages[0] &&
-                      ownersData.pages[0].ownersCount / 10) ||
+                    (vehiclesData &&
+                      vehiclesData.pages &&
+                      vehiclesData.pages[0] &&
+                      vehiclesData.pages[0].vehiclesCount / 10) ||
                       1
                   ) === page
                 }
@@ -144,3 +144,4 @@ export const OwnersList = () => {
     </Flex>
   );
 };
+
