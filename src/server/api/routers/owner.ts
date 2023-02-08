@@ -46,11 +46,12 @@ export const ownerRouter = createTRPCRouter({
           mobile: input.mobile,
         },
       });
+
       if (!owner) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Owner does not exists",
-          cause: "Owner does not exists",
+          message: "Owner does not exists.",
+          cause: "Owner does not exists.",
         });
       }
 

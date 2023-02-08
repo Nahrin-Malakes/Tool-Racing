@@ -8,6 +8,7 @@ import { AddOwner } from "@/components/AddOwner/AddOwner";
 import { AddVehicle } from "@/components/AddVehicle/AddVehicle";
 import { SearchVehicleDB } from "@/components/SearchVehicleDB/SearchVehicleDB";
 import { Layout } from "@/components/Layout/Layout";
+import { OwnersList } from "@/components/OwnersList/OwnersList";
 
 export {
   Navbar,
@@ -20,5 +21,6 @@ export {
   AddVehicle,
   SearchVehicleDB,
   Layout,
+  OwnersList,
 };
 

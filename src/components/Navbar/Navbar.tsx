@@ -84,9 +84,7 @@ export const Navbar = () => {
                 size={"sm"}
                 mr={4}
                 leftIcon={<AddIcon />}
-              >
-                Action
-              </MenuButton>
+              ></MenuButton>
               <MenuList>
                 <AddOwner />
                 <AddVehicle />
