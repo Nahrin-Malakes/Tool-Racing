@@ -81,6 +81,7 @@ export const AddVehicle = () => {
             isClosable: true,
           });
           await utils.vehicle.getAll.invalidate();
+          await utils.owner.getAllInfinite.invalidate();
           onClose();
         },
       }

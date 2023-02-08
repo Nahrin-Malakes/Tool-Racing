@@ -2,7 +2,6 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import type { Owner } from "@prisma/client";
 
 export const ownerRouter = createTRPCRouter({
   add: protectedProcedure
@@ -101,11 +100,14 @@ export const ownerRouter = createTRPCRouter({
       const owners = await ctx.prisma.owner.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: "desc",
+        },
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (owners.length > limit) {
         const nextItem = owners.pop();
-        nextCursor = nextItem!.id;
+        nextCursor = nextItem && nextItem.id;
       }
 
       return { owners, nextCursor, ownersCount };

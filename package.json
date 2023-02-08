@@ -32,6 +32,7 @@
     "next-auth": "^4.18.7",
     "next-pwa": "^5.6.0",
     "react": "18.2.0",
+    "react-chakra-pagination": "^2.0.3",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "sharp": "^0.31.3",
@@ -56,4 +57,3 @@
     "initVersion": "7.3.2"
   }
 }
-

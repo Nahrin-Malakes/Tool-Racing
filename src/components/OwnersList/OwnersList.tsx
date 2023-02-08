@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   TableContainer,
   Table,
@@ -11,6 +12,7 @@ import {
   Flex,
   Box,
   useToast,
+  Button,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
@@ -19,20 +21,22 @@ import { EditOwner } from "@/components/index";
 
 export const OwnersList = () => {
   const toast = useToast();
+  const [page, setPage] = useState(0);
 
   const utils = api.useContext();
-  const { data: ownersData, fetchNextPage } =
-    api.owner.getAllInfinite.useInfiniteQuery(
-      {
-        limit: 10,
-      },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      }
-    );
+  const {
+    data: ownersData,
+    fetchNextPage,
+    fetchPreviousPage,
+  } = api.owner.getAllInfinite.useInfiniteQuery(
+    {
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
   const { mutateAsync } = api.owner.remove.useMutation();
-
-  // utils.owner.getAll.
 
   const handleRemove = async (mobile: string) => {
     await mutateAsync(
@@ -49,7 +53,7 @@ export const OwnersList = () => {
             duration: 9000,
             isClosable: true,
           });
-          await utils.owner.getAll.invalidate();
+          await utils.owner.getAllInfinite.invalidate();
         },
         onError(error) {
           toast({
@@ -65,25 +69,10 @@ export const OwnersList = () => {
     );
   };
 
-  console.log(ownersData);
-
   return (
     <Flex flexDirection={"column"}>
       <Center>
         <Text fontSize={"3xl"}>Owners</Text>
-        <button
-          onClick={() => {
-            fetchNextPage()
-              .then((d) => {
-                console.log(d.data?.pages[0]);
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          }}
-        >
-          asdsadasd
-        </button>
       </Center>
       <Center>
         <Box w={"60%"}>
@@ -92,7 +81,6 @@ export const OwnersList = () => {
             borderRadius="3xl"
             p={"6px"}
             borderColor="#2d3748"
-            borderBottom={"none"}
           >
             <Table>
               <Thead>
@@ -105,25 +93,51 @@ export const OwnersList = () => {
               <Tbody>
                 {ownersData &&
                   ownersData.pages &&
-                  ownersData.pages[ownersData.pages.length - 1]?.owners.map(
-                    (owner) => (
-                      <Tr key={owner.mobile}>
-                        <Td>{owner.name}</Td>
-                        <Td>{owner.mobile}</Td>
-                        <Td>
-                          <EditOwner ownerMobile={owner.mobile} />
-                          <DeleteIcon
-                            cursor={"pointer"}
-                            fontSize={"l"}
-                            color="red"
-                            onClick={() => void handleRemove(owner.mobile)}
-                          />
-                        </Td>
-                      </Tr>
-                    )
-                  )}
+                  ownersData.pages[page]?.owners.map((owner) => (
+                    <Tr key={owner.mobile}>
+                      <Td>{owner.name}</Td>
+                      <Td>{owner.mobile}</Td>
+                      <Td>
+                        <EditOwner ownerMobile={owner.mobile} />
+                        <DeleteIcon
+                          cursor={"pointer"}
+                          fontSize={"l"}
+                          color="red"
+                          onClick={() => void handleRemove(owner.mobile)}
+                        />
+                      </Td>
+                    </Tr>
+                  ))}
               </Tbody>
             </Table>
+            <Flex justifyContent={"space-between"} pt="4">
+              <Button
+                isDisabled={page === 0}
+                onClick={() => {
+                  void fetchPreviousPage();
+                  setPage(page - 1);
+                }}
+              >
+                Previus
+              </Button>
+              <Button
+                isDisabled={
+                  Math.floor(
+                    (ownersData &&
+                      ownersData.pages &&
+                      ownersData.pages[0] &&
+                      ownersData.pages[0].ownersCount / 10) ||
+                      1
+                  ) === page
+                }
+                onClick={() => {
+                  void fetchNextPage();
+                  setPage(page + 1);
+                }}
+              >
+                Next
+              </Button>
+            </Flex>
           </TableContainer>
         </Box>
       </Center>
