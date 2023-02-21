@@ -12,19 +12,30 @@ export const ProtectedRoute = ({
   const { status: sessionStatus, data: sessionData } = useSession();
   const router = useRouter();
 
-  if (sessionStatus === "unauthenticated") {
-    void router.push("/api/auth/signin");
-    return <p>Access Denied</p>;
-  }
+  // if (sessionStatus === "unauthenticated") {
+  //   void router.push("/api/auth/signin");
+  //   return <p>Access Denied</p>;
+  // }
+
+  // if (
+  //   adminOnly &&
+  //   sessionData &&
+  //   sessionData.user &&
+  //   sessionData.user.role === "USER"
+  // ) {
+  //   void router.push("/api/auth/signin");
+  //   return <p>Access Denied</p>;
+  // }
+
+  if (sessionStatus === "loading") return <p>Loading...</p>;
 
   if (
-    adminOnly &&
-    sessionData &&
-    sessionData.user &&
-    sessionData.user.role === "USER"
+    sessionStatus === "unauthenticated" ||
+    (adminOnly && sessionData?.user?.role !== "ADMIN")
   ) {
     void router.push("/api/auth/signin");
-    return <p>Access Denied</p>;
+
+    return <></>;
   }
 
   return <>{children}</>;
